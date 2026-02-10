@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELL TOWER // ACCESS CONTROL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        /* Specyficzne style tylko dla ekranu logowania */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+
+        .login-wrapper {
+            width: 500px;
+            padding: 40px;
+            border: 2px solid #33ff00;
+            background-color: rgba(0, 20, 0, 0.9);
+            box-shadow: 0 0 30px rgba(51, 255, 0, 0.15);
+            position: relative;
+            z-index: 20; /* Powyżej linii skanujących */
+            text-align: center;
+        }
+
+        .logo-large {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #33ff00;
+            letter-spacing: 2px;
+        }
+
+        .sub-header {
+            border-bottom: 1px solid #33ff00;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .label {
+            display: inline-block;
+            width: 120px;
+        }
+
+        /* Ukrywamy domyślny wygląd inputa i robimy go "terminalowym" */
+        input[type="password"] {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(51, 255, 0, 0.3);
+            color: #33ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1em;
+            width: 200px;
+            outline: none;
+        }
+
+        input[type="password"]:focus {
+            border-bottom: 2px solid #33ff00;
+            box-shadow: 0 5px 10px rgba(51, 255, 0, 0.1);
+        }
+
+        /* Komunikaty błędów */
+        #message-area {
+            height: 30px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #ff3333;
+            animation: blinker 0.2s linear 3;
+        }
+
+        .success {
+            color: #33ff00;
+        }
+
+        .blinking-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #33ff00;
+            animation: blinker 1s linear infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="crt-overlay"></div>
+    <div class="scanline"></div>
+
+    <div class="login-wrapper">
+        <div class="logo-large">BELL TOWER</div>
+        <div class="sub-header">SECURE ACCESS POINT // v.4.02</div>
+
+        <div class="input-group">
+            <span class="label">USER:</span> 
+            <span style="color: #fff; background: #33ff00; color: #000; padding: 0 5px;">T. HORÁKOVÁ</span>
+        </div>
+
+        <div class="input-group">
+            <span class="label">PASSWORD:</span>
+            <input type="password" id="passwordInput" autofocus autocomplete="off">
+        </div>
+
+        <div id="message-area">
+            >> OCZEKIWANIE NA DANE_
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("passwordInput");
+        const msgArea = document.getElementById("message-area");
+
+        // Nasłuchiwanie wciśnięcia klawisza
+        input.addEventListener("keypress", function(event) {
+            // Jeśli wciśnięto ENTER (kod 13)
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+
+        function checkPassword() {
+            const val = input.value;
+            
+            // Symulacja "przetwarzania"
+            msgArea.innerText = ">> WERYFIKACJA HASHA...";
+            
+            setTimeout(() => {
+                // Sprawdzenie hasła (tarot)
+                if (val.toLowerCase() === "tarot") {
+                    msgArea.innerHTML = "<span class='success'>>> DOSTĘP PRZYZNANY. ŁADOWANIE...</span>";
+                    
+                    // Przekierowanie do głównego pliku po 1.5 sekundy
+                    setTimeout(() => {
+                        window.location.href = "main.html"; 
+                    }, 1500);
+
+                } else {
+                    msgArea.innerHTML = "<span class='error'>>> BŁĄD: NIEPRAWIDŁOWE HASŁO</span>";
+                    input.value = ""; // Czyści pole
+                    
+                    // Reset komunikatu po chwili
+                    setTimeout(() => {
+                        msgArea.innerText = ">> OCZEKIWANIE NA DANE_";
+                    }, 2000);
+                }
+            }, 600); // Małe opóźnienie dla efektu
+        }
+
+        // Zawsze ustawiaj fokus na polu hasła po kliknięciu gdziekolwiek
+        document.addEventListener("click", function() {
+            input.focus();
+        });
+    </script>
+</body>
+</html>

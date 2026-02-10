@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELL TOWER // SECURE TERMINAL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="crt-overlay"></div>
+    <div class="scanline"></div>
+
+    <div id="password-overlay" style="display: none;">
+        <div class="login-wrapper">
+            <div class="logo-large">BELL TOWER</div>
+            <div class="sub-header">RESTRICTED ACCESS // ATT_3</div>
+            <div class="input-group">
+                <span class="label">PASSWORD:</span>
+                <input type="password" id="att3PasswordInput" autofocus autocomplete="off">
+            </div>
+            <div id="att3-message-area">
+                >> OCZEKIWANIE NA DANE_
+            </div>
+            <div class="button-group" style="margin-top: 20px;">
+                <a href="#" onclick="closePasswordOverlay(); return false;" class="cancel-button">[ ANULUJ ]</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="terminal-container">
+        <header class="terminal-header">
+            <div class="header-left">
+                <span class="bell-tower-logo">BELL TOWER CORP.</span> // PRAGUE_HQ
+            </div>
+            <div class="header-right">
+                USER: <span class="user-highlight">T. HORÁKOVÁ</span> [LVL 4]<br>
+                DATE: 2075.11.15
+            </div>
+        </header>
+
+        <main class="main-grid">
+            
+            <aside class="sidebar">
+                <div class="nav-header">>> DATABASE_ACCESS</div>
+                <ul class="file-list">
+                    <li onclick="openFile('profile')" class="active-link">[FILE]: PROFIL_GŁÓWNY</li>
+                    <li onclick="openFile('att1')">[ATT_1]: WYWIAD_OJCIEC</li>
+                    <li onclick="openFile('att2')">[ATT_2]: SIEC_POWIAZAN</li>
+                    <li onclick="openFile('att3')" class="restricted">[ATT_3]: NAGRANIE_PRYWATNE</li>
+                    <li onclick="openFile('audit')">[DOC]: AUDYT_ZESPOLU</li>
+                    <li onclick="logout()">[CMD]: WYLOGUJ</li>
+                </ul>
+                <div class="system-status">
+                    SYS_STATUS: ONLINE<br>
+                    ENCRYPTION: OMEGA<br>
+                    <span class="blink">_</span>
+                </div>
+            </aside>
+
+            <section class="content-viewer" id="viewer">
+                
+                <div id="profile" class="file-content active">
+                    <div class="doc-header">
+                        BELL TOWER CORPORATION - PRAGUE HQ<br>
+                        DZIAŁ ZASOBÓW LUDZKICH I BEZPIECZEŃSTWA WEWNĘTRZNEGO<br>
+                        ----------------------------------------------------------<br>
+                        RAPORT PERSONALNY: KOD BENVENUTTI-994<br>
+                        KLAUZULA POUFNOŚCI: POZIOM 4 (TYLKO ZARZĄD)<br>
+                        DATA GENEROWANIA: 12.11.2075
+                    </div>
+                    <hr>
+                    <p><span class="section-title">[SEKCJA 1: DANE IDENTYFIKACYJNE ZASOBU]</span></p>
+                    <p>
+                        ID PRACOWNIKA:   <span class="data">BT-PRG-994-EXEC</span><br>
+                        IMIE I NAZWISKO: <span class="data">Vito BENVENUTTI</span><br>
+                        WIEK:            <span class="data">28 lat</span><br>
+                        PSEUDONIM:       <span class="data">"Kier"</span><br>
+                        STANOWISKO:      <span class="data">Specjalista ds. Fuzji i Przejęć</span><br>
+                        LOKALIZACJA:     <span class="data">Sektor Korporacyjny, Praga</span><br>
+                        POCHODZENIE:     <span class="data">Mieszane (Czechy/Włochy)</span><br>
+                        STATUS:          <span class="status-ok">AKTYWNY / WYSOKI PRIORYTET</span>
+                    </p>
+
+                    <p><span class="section-title">[SEKCJA 2: PROFIL PSYCHOLOGICZNY]</span></p>
+                    <p>
+                        TYP OSOBOWOŚCI: Dominujący / Narcystyczny<br>
+                        ANALIZA BEHAWIORALNA:<br>
+                        Obiekt wykazuje cechy funkcjonalnej socjopatii korporacyjnej. Empatia zredukowana do minimum, symulowana jedynie na potrzeby protokołów społecznych. Personel niższego szczebla traktowany jest przedmiotowo.
+                    </p>
+                    <p>
+                        GŁÓWNA MOTYWACJA:<br>
+                        Władza strukturalna i stabilizacja pozycji. Dążenie do celu bez względu na koszty etyczne i/lub materialne innych.
+                    </p>
+                    <p>
+                        OCENA RYZYKA:<br>
+                        Wysoki poziom egoizmu może prowadzić do konfliktów interesów, jeśli cele Firmy nie będą zbieżne z agendą prywatną Obiektu.
+                    </p>
+
+                    <p><span class="section-title">[SEKCJA 3: AUDYT SPRZĘTOWY (CYBERWARE)]</span></p>
+                    <p>STAN FIZYCZNY: <span class="alert">ZMODYFIKOWANY (Klasa Bojowa Ukryta)</span></p>
+                    <ul class="list">
+                        <li><strong>1. WZMOCNIENIE SPLOTU KOSTNEGO (x2):</strong> Status: Operacyjny. Wykryto podwójną gęstość szkieletu.</li>
+                        <li><strong>2. RAMOWNICA LINEARNA (Model Beta):</strong> Status: Operacyjny. Implant klasy ochronnej/wojskowej. Uwagi: Niestandardowe wyposażenie dla pracownika biurowego. Obiekt dysponuje siłą zdolną do trwałego uszkodzenia oponenta w walce wręcz.</li>
+                        <li><strong>3. WYPOSAŻENIE OSOBISTE (WYJĄTEK OD DRESS CODE):</strong> Przedmiot: Kolczyk z diamentem (lewe ucho). Pochodzenie: Pamiątka rodzinna (matka). Status: Zezwolenie specjalne.</li>
+                    </ul>
+
+                    <p><span class="section-title">[SEKCJA 4: TŁO BIOGRAFICZNE (BACKGROUND)]</span></p>
+                    <p>
+                        RODZINA:<br>
+                        - Ojciec (Były Menedżer): Relacja wroga. Obiekt poddany przymusowej indoktrynacji korporacyjnej w młodości. Aktualne miejsce pobytu nieznane. Zobacz: Załącznik 1.<br>
+                        - Matka (Ratownik Medyczny): Status NIEŻYJĄCA. Jedyny odnotowany punkt zaczepienia emocjonalnego. Jej śmierć stanowiła katalizator obecnej, “zimnej” postawy. Zobacz: Załącznik 3.
+                    </p>
+                    <p>
+                        HISTORIA ZATRUDNIENIA:<br>
+                        Rekrutacja wewnętrzna. Obiekt wychowany w strefie korporacyjnej, ukształtowany przez adekwatne środowisko rodzinne.
+                    </p>
+
+                    <p><span class="section-title">[SEKCJA 5: ANALIZA SIECI POWIĄZAŃ]</span></p>
+                    <p>
+                        >> ZASOBY (SOJUSZNICY):<br>
+                        1. BRAT (Starszy): Kontakt sporadyczny. Zobacz: Załącznik 2.<br>
+                        2. KONTAKT "ULICA": Zobacz: Załącznik 2.<br>
+                        3. PARTNER BIZNESOWY: Zobacz: Załącznik 2.
+                    </p>
+                    <br>
+                    <div class="footer-note">
+                        WNIOSKI KOŃCOWE:<br>
+                        Vito Benvenutti to wzorowy "rekin" Bell Tower. Jego bezwzględność i ukryta siła fizyczna czynią go idealnym do zadań specjalnych typu "wrogie przejęcie". Należy karmić jego ambicję, jednocześnie monitorując lojalność.<br>
+                        >> PODPISANO CYFROWO: Tamara Horáková
+                    </div>
+                </div>
+
+                <div id="att1" class="file-content">
+                    <div class="doc-header">
+                        // ZAŁĄCZNIK AUDIO - TRANSKRYPCJA AUTOMATYCZNA v.2.0<br>
+                        PLIK: ATT_1_FAMILY_BACKGROUND.log<br>
+                        OBIEKT: Vito Benvenutti | PROWADZĄCY: T. Horáková
+                    </div>
+                    <hr>
+                    <p class="transcript">[ROZPOCZĘCIE NAGRANIA]</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Przejdźmy do tematu seniora rodu. Matteo Benvenutti. Według naszych danych – zaginiony. Według plotek – ukrywa się przed wierzycielami w strefie walki. Wiesz, gdzie on jest, Vito?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Nie. I nie widzę sensownego uzasadnienia, dla którego miałbym poświęcać zasoby na ustalenie tej lokalizacji. To zamknięty rozdział.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> To twój ojciec.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> To były pracownik średniego szczebla, który nie poradził sobie z presją. Jego obecny status jest nieistotny dla mojej wydajności w Bell Tower.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Z raportów psychologa wynika, że jego metody wychowawcze były... "niekonwencjonalne". Przemoc fizyczna, wymuszenia, izolacja. Niektórzy nazwaliby to torturami. A ty siedzisz tu, w garniturze za trzy tysiące euro, i mówisz mi, że to nieistotne?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> [Pauza 2.4s. Analiza głosu: Brak stresu.] Tamara, spójrzmy na to obiektywnie. Czy był alkoholikiem? Tak. Czy był sadystą? Prawdopodobnie. Ale jego celem było stworzenie idealnego pracownika korporacji. Eliminował we mnie słabość. Nauczył mnie, że ból to tylko informacja z układu nerwowego, którą można zignorować, by dokończyć zadanie.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Czyli jesteś mu wdzięczny?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Jestem produktem jego "projektu", który przerósł twórcę. On złamał się pod presją systemu. Ja systemem zarządzam. Nienawidzę go nie za to, co mi robił, ale za to, że ostatecznie okazał się słaby. Hipokryta. Wymagał doskonałości, będąc defektem.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Jeśli go znajdziemy... stanowi zagrożenie dla firmy?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Jeśli go znajdziecie, odeślijcie go do mnie. Zapewnię mu... odpowiednią odprawę emerytalną. Bez angażowania działu prawnego.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Rozumiem. Przejdźmy dalej.</p>
+                    
+                    <p class="transcript">[KONIEC NAGRANIA]</p>
+                </div>
+
+                <div id="att2" class="file-content">
+                    <div class="doc-header">
+                        // ZAŁĄCZNIK AUDIO - TRANSKRYPCJA AUTOMATYCZNA<br>
+                        PLIK: ATT_2_NETWORK.log<br>
+                        TEMAT: Analiza Powiązań
+                    </div>
+                    <hr>
+                    <p class="transcript">[WZNOWIENIE NAGRANIA]</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> System flaguje trzy powiązania, które wymagają wyjaśnienia. Po pierwsze: Rodzeństwo. Imię: Pavo. Starszy brat.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Nie widzieliśmy się od lat. Wybrał życie poza strukturami. Jego trajektoria kariery jest płaska. Nie utrzymujemy kontaktu, bo nie mamy o czym rozmawiać. On nie rozumie języka zysku, ja nie rozumiem języka porażki.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Zanotowane: Niskie ryzyko wycieku danych. Punkt drugi. Klub bokserski "Iron Jaw". Często tam bywasz. Spotykasz się tam z niejakim Janem Kovářem. To ulica, Vito. Brud, krew i boosterzy. Nie pasuje do twojego profilu.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Mylisz się, Tamara. To czysta higiena psychiczna. Kovář to sparingpartner, ale też menedżer klubu. Posiadam tam 15% udziałów – cichy wspólnik. To nie jest przyjaźń w sentymentalnym sensie. To symbioza.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Wyjaśnij.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Na ringu, kiedy łamię komuś żebra, nikt nie pyta o moje KPI. To wentyl bezpieczeństwa. Kovář dba o dyskrecję i organizuje walki. Dzięki temu nie przynoszę agresji do biura. To inwestycja w stabilność mojej psychiki. A przy okazji - doskonałe miejsce do werbowania "mięśni", gdy ochrona firmowa jest zbyt restrykcyjna prawnie.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Uznajmy to za "zewnętrzny dział HR". Ostatni punkt. Alexej Pristev. Twój odpowiednik w oddziale w Marsylii.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Alexej... [Wyczuwalne rozbawienie]. Cenny kontakt.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Wasze logi połączeń są częste. O czym rozmawiacie? Planujecie fuzję własnych portfeli?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Wymieniamy się... perspektywami. Kijów ma inne regulacje, Praga inne. Czasem Alexej potrzebuje, żeby pewne towary "zaginęły" w Czechach, a ja czasem potrzebuję informacji o rynku wschodnim, zanim trafią do oficjalnych raportów. To bardziej pakt o nieagresji i wzajemnym wsparciu. On wie, że jeśli ja upadnę, to pociągnę go za sobą. I vice versa. To najtrwalszy rodzaj lojalności.</p>
+                    
+                    <p><strong class="speaker-t">HORÁKOVÁ:</strong> Brzmi ryzykownie. Ale dopóki cyfry w Pradze się zgadzają, przymknę na to oko. Pamiętaj tylko, że w Bell Tower nie ma niezastąpionych.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Oczywiście, szefowo. Dlatego dbam o to, by bycie zastąpionym było zbyt kosztowne.</p>
+
+                    <p class="transcript">[KONIEC NAGRANIA]</p>
+                    <p class="status-ok">>> STATUS WERYFIKACJI: POZYTYWNY Z ZASTRZEŻENIAMI.</p>
+                </div>
+
+                <div id="att3" class="file-content">
+                    <div class="doc-header alert">
+                        // NAGRANIE OPERACYJNE (NIEAUTORYZOWANE)<br>
+                        PLIK: SURV_REC_PRIVATE_BALCONY.wav<br>
+                        LOKALIZACJA: Bell Tower Gala, Taras VIP<br>
+                        STATUS: NAGRANIE Z UKRYCIA
+                    </div>
+                    <hr class="red-line">
+                    <p class="transcript">[SZUM WIATRU / ODGŁOSY IMPREZY W TLE / BRZDĘK SZKŁA]</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> ...więc powiedziałem zarządowi w Kijowie, że jeśli chcą ciąć koszty, to niech zaczną od własnych premii. Mina dyrektora? Bezcenna. [Pristev śmieje się]. Ale ty nie słuchasz, Vito. Gapisz się w te neony jakbyś widział ducha.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Dziś jest drugi listopada, Alexej.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Ah. Rozumiem. Rocznica?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> [Dźwięk zapalniczki]. Tak. Matka.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Nigdy o niej nie mówisz. O starym ciągle. Że był bydlakiem, że cię tresował. Ale o niej? Cisza.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Bo o niej nie da się mówić językiem, którego używamy tutaj. Ona... ona nie pasowała do tego świata. Ojciec wracał do domu i śmierdział whisky i prochem. Ona pachniała środkami odkażającymi i... czymś słodkim. Wanilią? Była jedyną strefą demilitaryzowaną w moim życiu. Kiedy stary wpadał w szał, chowała mnie w łazience, puszczała wodę z kranu, żebym nie słyszał krzyków, i czytała mi bajki. Bajki, Alexej. W środku pieprzonej strefy korporacyjnej.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Była ratowniczką Trauma Teamu, tak? Twarda babka.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Była za dobra. To ją zabiło. To nie była nawet jej zmiana. Dostała wezwanie do pacyfikacji w metrze. Jakiś dzieciak, nafaszerowany tanim chińskim chromem, dostał ataku cyberpsychozy. Rozszarpał dwóch oficerów policji.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Standardowa procedura: strzelać, żeby zabić.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Tak zrobiłby każdy z nas. Ale nie ona. Ona zobaczyła w tym potworze pacjenta. Podeszła z zestawem uspokajającym. "Spokojnie, synku" – to były jej ostatnie słowa, zanim oderwał jej ramię razem z obręczą barkową i rzucił na tory. Wykrwawiła się, zanim przyjechało wsparcie.</p>
+                    
+                    <p class="transcript">[DŁUGA PAUZA]</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> To... gówniana śmierć, Vito. Przykro mi.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Niepotrzebnie. To była lekcja. Najważniejsza, jaką dostałem. Empatia to błąd w oprogramowaniu, Alexej. To luka w zabezpieczeniach. Ona zginęła, bo chciała pomóc. Ojciec przeżył, bo był skurwysynem. Ja... wyciągnąłem wnioski.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Dlatego jesteś, jaki jesteś?</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Dlatego siedzę na tym tarasie i piję szampana za tysiąc euro, a nie leżę w rynsztoku. Zabiłem w sobie tę jej "dobrą część" w dniu pogrzebu. To jedyny sposób, żeby przetrwać w Bell Tower. Ale... [głos cichnie] czasem mi brakuje tego zapachu wanilii.</p>
+                    
+                    <p><strong class="speaker-other">PRISTEV:</strong> Wypijmy za to. Za tych, którzy byli zbyt miękcy na to miasto.</p>
+                    
+                    <p><strong class="speaker-v">BENVENUTTI:</strong> Zdrowie. I obyśmy my nigdy nie zmiękli.</p>
+                    
+                    <br>
+                    <div class="alert-box">
+                        >> ANALIZA BEZPIECZEŃSTWA:<br>
+                        Obiekt wykazuje sentyment do zmarłej matki, jednak racjonalizuje jej śmierć jako dowód na wyższość bezwzględności nad empatią. Trauma przekuta w atut operacyjny. Ryzyko załamania psychicznego: NISKIE.<br>
+                        >> UWAGA!!! ZAŁĄCZNIK NIE DO WZGLĄDU PRACOWNIKA!!!
+                    </div>
+                </div>
+
+                <div id="audit" class="file-content">
+                    <div class="doc-header">
+                        // ODBIORCA: DYREKTOR T. HORÁKOVÁ<br>
+                        // TEMAT: AUDYT ZESPOŁU WSPARCIA (PODLEGLI: V. “Kier” BENVENUTTI)<br>
+                        // DATA: 2075.11.15
+                    </div>
+                    <hr>
+                    <p>
+                        >> WSTĘP:<br>
+                        Poniższy raport zawiera analizę przydatności operacyjnej personelu pomocniczego przypisanego do menedżera Vito Benvenuttiego. Zespół wykazuje wysoką skuteczność w realizowaniu celów działu Fuzji i Przejęć, działając często na granicy legalności, co jest zgodne z polityką firmy.
+                    </p>
+
+                    <div class="audit-card">
+                        <div class="card-header">ZASÓB NR 1: Trefl</div>
+                        <p>
+                            DANE: Marek “Trefl” Suchý<br>
+                            STANOWISKO: Starszy Asystent Wykonawczy<br>
+                            SPECJALIZACJA: Wywiad Gospodarczy / Zarządzanie Kryzysowe (Niejawne)
+                        </p>
+                        <p>
+                            PROFIL OPERACYJNY:<br>
+                            Wysokiej klasy specjalista ds. logistyki i administracji. Perfekcyjnie zarządza kalendarzem i wizerunkiem przełożonego. Posiada uprawnienia Agenta Polowego klasy C (ukryte w aktach HR), co pozwala mu na prowadzenie działań "czyszczących" po agresywnych negocjacjach. Kompetentny, zimny, zorientowany na cel.
+                        </p>
+                        <p>
+                            LOJALNOŚĆ: Wzorowa wobec struktury Bell Tower.
+                        </p>
+                        <div class="note">
+                            >> NOTATKA OD T. HORÁKOVEJ:<br>
+                            "Vito ma szczęście, że go ma, ale musi uważać. Marek jest zbyt bystry na bycie tylko asystentem. Widzę, jak patrzy na fotel Vito, gdy ten odwraca się plecami. To dobrze – rywalizacja napędza wydajność. Dopóki Marek wierzy, że awansuje dzięki Vito, będzie mu służył."
+                        </div>
+                    </div>
+
+                    <div class="audit-card">
+                        <div class="card-header">ZASÓB NR 2: Pik</div>
+                        <p>
+                            DANE: Pavel "Pik" Novák<br>
+                            STANOWISKO: Kierowca<br>
+                            SPECJALIZACJA: Pojazdy zwykłe oraz opancerzone / Ciężka maszyneria
+                        </p>
+                        <p>
+                            PROFIL OPERACYJNY:<br>
+                            Obecnie pełni funkcję szofera. Jego implanty (wzmacniacze refleksu, podskórny splot balistyczny) są regularnie serwisowane z budżetu operacyjnego Vito. Nie zadaje pytań, wykonuje polecenia z chirurgiczną precyzją.
+                        </p>
+                        <div class="note">
+                            >> NOTATKA OD T. HORÁKOVEJ:<br>
+                            "Proste narzędzie do prostych zadań. Vito traktuje go jak mebel, co jest błędem menedżerskim – nawet meble trzeba czasem odkurzyć, żeby się nie zepsuły. Pavel jest stabilny, dopóki czuje twardą rękę na karku. Zalecam Vito, by czasem rzucił mu jakąś premię, inaczej ten pies może kiedyś ugryźć rękę, która go bije."
+                        </div>
+                    </div>
+
+                    <div class="audit-card">
+                        <div class="card-header">ZASÓB NR 3: Karo</div>
+                        <p>
+                            DANE: Porucznik Lukáš “Karo” Zeman<br>
+                            STANOWISKO: Funkcjonariusz Policji<br>
+                            STATUS: Zewnętrzny Współpracownik / "Przyjaciel Firmy"
+                        </p>
+                        <p>
+                            PROFIL OPERACYJNY:<br>
+                            Oficer z 15-letnim stażem. Zeman oficjalnie nie widnieje na liście płac zespołu, Benvenutti opisuje rozmowy z nim jako “konsultacje do spraw bezpieczeństwa”. Niekiedy zapewnia osłonę prawną dla działań terenowych zespołu Vito.
+                        </p>
+                        <p>
+                             MOTYWACJA: Finansowa. Obiekt obciążony prywatnymi długami medycznymi (rodzina).
+                        </p>
+                        <div class="note">
+                            >> NOTATKA OD T. HORÁKOVEJ:<br>
+                            "To nie jest przyjaźń, Vito, to transakcja. Zeman nami gardzi, widzę to w jego oczach podczas spotkań, ale bierze nasze eurodolary, bo musi. To czyni go idealnym aktywem, nienawidzi nas, ale potrzebuje nas bardziej niż tlenu. Utrzymywać zależność finansową."
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

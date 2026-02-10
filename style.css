@@ -1,0 +1,406 @@
+/* RESET I BAZA */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #050505;
+    color: #33ff00; /* Klasyczna zieleń terminala */
+    font-family: 'VT323', monospace;
+    font-size: 25px;
+    height: 100vh;
+    overflow: hidden; /* Brak paska przewijania strony, tylko w treści */
+}
+
+/* EFEKTY CRT (SCANLINES) */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(51, 255, 0, 0.2) 50%, rgba(0,0,0,0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanline {
+    0% { bottom: 100%; }
+    100% { bottom: -100px; }
+}
+
+/* KONTENER GŁÓWNY */
+.terminal-container {
+    display: flex;
+    flex-direction: column;
+    height: 96vh;
+    margin: 2vh;
+    border: 2px solid #33ff00;
+    box-shadow: 0 0 20px rgba(51, 255, 0, 0.2);
+    background-color: #0a0a0a;
+    position: relative;
+    z-index: 1;
+}
+
+/* NAGŁÓWEK */
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 2px solid #33ff00;
+    background: rgba(51, 255, 0, 0.1);
+}
+
+.bell-tower-logo {
+    font-weight: bold;
+    font-size: 1.4em;
+    text-shadow: 0 0 5px #33ff00;
+}
+
+.header-right {
+    text-align: right;
+    font-size: 0.9em;
+}
+
+.user-highlight {
+    color: #fff;
+    background-color: #33ff00;
+    color: #000;
+    padding: 0 5px;
+}
+
+/* UKŁAD GŁÓWNY (GRID) */
+.main-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* PASEK BOCZNY */
+.sidebar {
+    border-right: 2px solid #33ff00;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-header {
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #33ff00;
+    padding-bottom: 5px;
+}
+
+.file-list {
+    list-style: none;
+}
+
+.file-list li {
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+.file-list li:hover {
+    background-color: rgba(51, 255, 0, 0.2);
+    border: 1px solid #33ff00;
+}
+
+.file-list li.active-link {
+    background-color: #33ff00;
+    color: #000;
+    font-weight: bold;
+}
+
+.file-list li.restricted {
+    color: #ff3333;
+    text-shadow: 0 0 2px #ff3333;
+}
+
+.file-list li.restricted:hover {
+    background-color: rgba(255, 51, 51, 0.2);
+    border-color: #ff3333;
+}
+
+.file-list li.restricted.active-link {
+    background-color: #ff3333;
+    color: #000;
+}
+
+.system-status {
+    margin-top: auto;
+    font-size: 0.8em;
+    opacity: 0.7;
+    border-top: 1px dashed #33ff00;
+    padding-top: 10px;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* OKNO PRZEGLĄDARKI TREŚCI */
+.content-viewer {
+    padding: 20px;
+    overflow-y: auto; /* Przewijanie tylko tutaj */
+    background-image: radial-gradient(circle, rgba(0,20,0,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+/* Pasek przewijania */
+.content-viewer::-webkit-scrollbar {
+    width: 10px;
+}
+.content-viewer::-webkit-scrollbar-track {
+    background: #000;
+}
+.content-viewer::-webkit-scrollbar-thumb {
+    background: #33ff00;
+    border: 1px solid #000;
+}
+
+/* ZAWARTOŚĆ PLIKÓW */
+.file-content {
+    display: none; /* Domyślnie ukryte */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.file-content.active {
+    display: block; /* Pokazane po kliknięciu */
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* STYLIZACJA TEKSTU DOKUMENTÓW */
+.doc-header {
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    font-weight: bold;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #33ff00;
+    margin: 15px 0;
+    opacity: 0.5;
+}
+
+.section-title {
+    background: rgba(51, 255, 0, 0.2);
+    padding: 2px 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.data {
+    color: #ccffcc;
+}
+
+.status-ok {
+    color: #33ff00;
+    font-weight: bold;
+    text-shadow: 0 0 5px #33ff00;
+}
+
+.alert {
+    color: #ff3333;
+    font-weight: bold;
+    text-shadow: 0 0 5px #ff3333;
+}
+
+.list {
+    list-style: none;
+    margin-left: 20px;
+}
+
+.list li {
+    margin-bottom: 10px;
+}
+
+.footer-note {
+    border: 1px solid #33ff00;
+    padding: 10px;
+    margin-top: 30px;
+    background: rgba(51, 255, 0, 0.05);
+}
+
+/* TRANSKRYPCJE */
+.transcript {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.speaker-t {
+    color: #ffff00; /* Tamara - żółty */
+}
+
+.speaker-v {
+    color: #33ff00; /* Vito - zielony */
+}
+
+.speaker-other {
+    color: #00ffff; /* Inni - cyan */
+}
+
+/* STYLIZACJA ALERTÓW (NAGRANIE O MATCE) */
+.alert-box {
+    border: 2px dashed #ff3333;
+    color: #ff3333;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.red-line {
+    border-top: 1px solid #ff3333;
+}
+
+/* KARTY AUDYTU */
+.audit-card {
+    border: 1px solid #33ff00;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0, 50, 0, 0.3);
+}
+
+.card-header {
+    font-size: 1.2em;
+    border-bottom: 1px solid #33ff00;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.note {
+    margin-top: 10px;
+    padding: 10px;
+    border-left: 3px solid #ffff00;
+    background: rgba(255, 255, 0, 0.1);
+    font-style: italic;
+    color: #ffffcc;
+}
+
+/* EKRAN HASŁA DLA ZAŁĄCZNIKA */
+#password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#password-overlay .login-wrapper {
+    width: 500px;
+    padding: 40px;
+    border: 2px solid #33ff00;
+    background-color: rgba(0, 20, 0, 0.9);
+    box-shadow: 0 0 30px rgba(51, 255, 0, 0.15);
+    text-align: center;
+}
+
+#password-overlay .logo-large {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #33ff00;
+    letter-spacing: 2px;
+}
+
+#password-overlay .sub-header {
+    border-bottom: 1px solid #33ff00;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    font-size: 1.2em;
+}
+
+#password-overlay .input-group {
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+#password-overlay .label {
+    display: inline-block;
+    width: 120px;
+}
+
+#password-overlay input[type="password"] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(51, 255, 0, 0.3);
+    color: #33ff00;
+    font-family: 'VT323', monospace;
+    font-size: 1em;
+    width: 200px;
+    outline: none;
+}
+
+#password-overlay input[type="password"]:focus {
+    border-bottom: 2px solid #33ff00;
+    box-shadow: 0 5px 10px rgba(51, 255, 0, 0.1);
+}
+
+#password-overlay #att3-message-area {
+    height: 30px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#password-overlay .error {
+    color: #ff3333;
+    animation: blinker 0.2s linear 3;
+}
+
+#password-overlay .success {
+    color: #33ff00;
+}
+
+#password-overlay .cancel-button {
+    color: #ff3333;
+    text-decoration: none;
+    border: 1px solid #ff3333;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+
+#password-overlay .cancel-button:hover {
+    background-color: rgba(255, 51, 51, 0.2);
+    color: #ff9999;
+}
